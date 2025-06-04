@@ -128,7 +128,7 @@ calibrated_est_trio_2 <- function(data_int,Z = NULL,rho_shared,alpha_ext,sd_alph
 ##' @export
 
 
-calibrated_estimator_logistic_1 <- function(data_int, Z = NULL, rho_shared, alpha_ext, sd_alpha_ext){
+calibrated_est_trio_logistic_1 <- function(data_int, Z = NULL, rho_shared, alpha_ext, sd_alpha_ext){
   Y_int <- data_int[,1]
   X_1_int <- data_int[,2]
   X_2_int <- data_int[,3]
@@ -183,7 +183,7 @@ calibrated_estimator_logistic_1 <- function(data_int, Z = NULL, rho_shared, alph
 ##' @param rho_shared: proportion of shared samples between internal and external data
 ##' @returns calibrated estimator for logistic regression in trio data
 ##' @export
-calibrated_estimator_logistic_2 <- function(data_int,Z,rho_shared, alpha_ext, sd_alpha_ext){
+calibrated_est_trio_logistic_2 <- function(data_int,Z,rho_shared, alpha_ext, sd_alpha_ext){
   Y_int <- data_int[,1]
   X_1_int <- data_int[,2]
   X_2_int <- data_int[,3]

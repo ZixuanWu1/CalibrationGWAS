@@ -81,7 +81,7 @@ format_data <- function(pheno, F_ind, Z = NULL){
 ##' (5) alpha_int: marginal estimate
 ##' (6) alpha_int_var: marginal variance
 ##' @export
-calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
+calibrated_est_sib <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
                                  overlap_ratio = 0){
   with(data, {
     # Adjust external variance
@@ -240,7 +240,7 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
 ##' (5) alpha_int: marginal estimate
 ##' (6) alpha_int_var: marginal variance
 ##' @export
-calibrated_logistic_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
+calibrated_est_sib_logistic <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
                                           overlap_ratio = 0){
   with(data, {
     # Adjust external variance
