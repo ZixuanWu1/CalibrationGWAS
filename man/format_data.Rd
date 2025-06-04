@@ -11,7 +11,7 @@ format_data(pheno, F_ind, Z = NULL)
 
 \item{F_ind:}{N-vector of invidual family index}
 
-\item{Z:}{N by p matrix of covariates}
+\item{Z:}{N by p data frame of covariates}
 }
 \value{
 a list of following quantities
@@ -19,8 +19,8 @@ a list of following quantities
 (2) K: number of families
 (3) Y: N-vector of phenotype
 (4) Y_tilde: N vector of normalized phenotype
-(5) Z: N by p matrix of covariates
-(6) Z_tilde: N by p matrix of normalized covariates
+(5) Z: N by p data frame of covariates
+(6) Z_tilde: N by p data frame of normalized covariates
 (7) F_ind: N vector of family index
 (8) size_dic: K vector of family size of each family
 (9) F_size: N vector of family size of each individual
