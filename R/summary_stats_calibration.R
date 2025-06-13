@@ -4,8 +4,8 @@
 ##' "alpha_ext", "alpha_ext_var", "N_int", "N_ext"
 ##' @param snp_list: list of SNPs that has zero direct effects (can be selected from an independent selection file)
 ##'
-##' @return rho: sample overlap ratio
-sample_overlap <- function(df, n_int, n_ext, snp_list = NA){
+##' @return r: noise correlation between external and internal unadjusted model
+noise_correlation <- function(df, snp_list = NA){
 
   # Select snps with zero effects
   if(! all(is.na(snp_list))){
@@ -21,7 +21,7 @@ sample_overlap <- function(df, n_int, n_ext, snp_list = NA){
   # Compute correlation
   noise_cor = median(alpha_int_std * alpha_ext_std)
 
-  return(noise_cor * sqrt(n_int / n_ext))
+  return(noise_cor)
 
 
 }
@@ -42,7 +42,7 @@ calibration_summary_stats <- function(df, rho = NA, family = "trio", r = "shared
   N = df$N_ext
 
   if (is.na(rho)){
-    rho = sample_overlap(df)}
+    rho = noise_correlation(df)}
 
   # Compute value and variance of alpha_int - alpha_ext
   alpha_diff = df$alpha_ext - df$alpha_int
