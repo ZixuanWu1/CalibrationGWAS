@@ -42,17 +42,19 @@ calibration_summary_stats <- function(df, rho = NA, family = "trio", r = "shared
   N = df$N_ext
 
   if (is.na(rho)){
-    rho = noise_correlation(df)}
+    noise_cor = noise_correlation(df)}
 
   # Compute value and variance of alpha_int - alpha_ext
   alpha_diff = df$alpha_ext - df$alpha_int
-  alpha_diff_var = df$alpha_int_var + df$alpha_ext_var - 2 * rho * sqrt(df$alpha_int_var * df$alpha_ext_var )
+  alpha_diff_var = df$alpha_int_var + df$alpha_ext_var - 2 * noise_cor * sqrt(df$alpha_int_var * df$alpha_ext_var )
 
   # Standardize estimates
   beta_int_std = df$beta_int / sqrt(df$beta_int_var)
   alpha_diff_std = alpha_diff / sqrt(alpha_diff_var)
 
   if(family == "trio"){
+    rho = noise_cor * sqrt(n/N)
+
     if(all(r == "zero")){
       beta_alpha_cor = (1 - rho) / sqrt( 2 * (1 + n/N - 2 * rho)  )
     } else if(all(r != "shared")){
