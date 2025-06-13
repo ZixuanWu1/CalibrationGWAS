@@ -36,11 +36,13 @@ sample_overlap <- function(df, snp_list = NA){
 ##' @param r: assumption on correlation between T and NT. Can be zero, shared, or a provided vector.
 ##'
 ##' @return a data frame of snp id, calibrated beta and its standard error
-calibration_summary_stats <- function(df, rho, family = "trio", r = "shared"){
+calibration_summary_stats <- function(df, rho = NA, family = "trio", r = "shared"){
 
   n = df$N_int
   N = df$N_ext
 
+  if (is.na(rho)){
+    rho = sample_overlap(df)}
 
   # Compute value and variance of alpha_int - alpha_ext
   alpha_diff = df$alpha_ext - df$alpha_int
