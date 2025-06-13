@@ -5,7 +5,7 @@
 ##' @param snp_list: list of SNPs that has zero direct effects (can be selected from an independent selection file)
 ##'
 ##' @return rho: sample overlap ratio
-sample_overlap <- function(df, snp_list = NA){
+sample_overlap <- function(df, n_int, n_ext, snp_list = NA){
 
   # Select snps with zero effects
   if(! all(is.na(snp_list))){
@@ -21,7 +21,7 @@ sample_overlap <- function(df, snp_list = NA){
   # Compute correlation
   noise_cor = median(alpha_int_std * alpha_ext_std)
 
-  return(noise_cor)
+  return(noise_cor * sqrt(n_int / n_ext))
 
 
 }
