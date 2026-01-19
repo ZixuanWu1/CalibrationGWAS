@@ -54,11 +54,10 @@ format_data <- function(pheno, F_ind, Z = NULL){
   dim_Z = 0
   if(! is.null(Z)){
     dim_Z = length(Z) / N
-  }
+  } 
   
-  return(list(N = length(F_ind), K = max(F_ind),
-              Y = pheno, Y_tilde = as.vector(pheno_tilde),  Z = Z, Z_tilde = Z_tilde,
-              F_ind = F_ind,  size_dic = size_dic, F_size = F_size, dim_Z = dim_Z,
+  return(list(Y = pheno, Y_tilde = as.vector(pheno_tilde), F_ind = F_ind, Z = Z, Z_tilde = Z_tilde,
+              size_dic = size_dic, F_size = F_size, K = max(F_ind),  N = length(F_ind), dim_Z = dim_Z,
               family2ind = family2ind))
 }
 
@@ -82,10 +81,10 @@ format_data <- function(pheno, F_ind, Z = NULL){
 ##' (6) alpha_int_var: marginal variance
 ##' @export
 calibrated_est_sib <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
-                               overlap_ratio = 0){
+                                 overlap_ratio = 0){
   with(data, {
     # Adjust external variance
-    C11 = (alpha_ext_var / N_ext) * N
+    C11 = (alpha_ext_var) * N
     
     # Compute correct model
     
@@ -124,37 +123,37 @@ calibrated_est_sib <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
       
     }
     else {
-      for(m in 2:M){
-        
-        # Only look at family of size m
-        XZ_sub = XZ[F_size == m, ]
-        resid_sub = resid(summary(incorrect_int))[F_size == m]
-        
-        XZ_tilde_sub = XZ_tilde[F_size == m, ]
-        resid_tilde_sub = resid(summary(correct_int))[F_size == m]
-        
-        
-        ind_sub = F_ind[F_size == m]
-        
-        C = cbind(XZ_tilde_sub * resid_tilde_sub, resid_sub, XZ_sub * resid_sub)
-        
-        C = t(sapply(unique(ind_sub),
-                     function(x) colSums(C[family2ind[[x]], ])))
-        
-        
-        Cs[[m]] = cov(C)
-        
-      }}
+    for(m in 2:M){
+      
+      # Only look at family of size m
+      XZ_sub = XZ[F_size == m, ]
+      resid_sub = resid(summary(incorrect_int))[F_size == m]
+      
+      XZ_tilde_sub = XZ_tilde[F_size == m, ]
+      resid_tilde_sub = resid(summary(correct_int))[F_size == m]
+      
+      
+      ind_sub = F_ind[F_size == m]
+      
+      C = cbind(XZ_tilde_sub * resid_tilde_sub, resid_sub, XZ_sub * resid_sub)
+      
+      C = t(sapply(unique(ind_sub),
+                   function(x) colSums(C[family2ind[[x]], ])))
+      
+      
+      Cs[[m]] = cov(C)
+      
+    }}
     
-    
+
     final_C <- Reduce("+", Cs[size_dic[1:K]])
     
-    
+
     ## Compute covariance components
     
+
     
-    
-    
+
     
     if(! is.null(Z)){
       qr_decomp <- correct_int$qr
@@ -189,8 +188,8 @@ calibrated_est_sib <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
       
     }
     
-    
-    
+
+
     # Compute C12, C13
     
     C12 = overlap_ratio * C23 * N / N_ext
@@ -201,18 +200,15 @@ calibrated_est_sib <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
     # Compute the final calibrated estimator
     beta_cal = beta_int +  (C23 - C12) / ( C11 + C33 - 2 * C13) * (alpha_ext - alpha_int)
     beta_cal_var = (C22 - (C23 - C12)^2 / (C11 + C33 - 2 * C13) ) / N
-    
-    
-    
-    
-    return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), beta_int = beta_int,
-                beta_int_var = (C22/N), alpha_int = alpha_int, alpha_int_var = (C33/N)) )
-  }
-  
-  
-  )
-}
 
+
+    return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), beta_int = beta_int,
+    beta_int_var = (C22/N), alpha_int = alpha_int, alpha_int_var = (C33/N)) )
+  }
+    
+    
+    )
+}
 
 ######################### Logistic Regression ###################################
 
@@ -237,7 +233,7 @@ calibrated_est_sib_logistic <- function(X, data, alpha_ext, alpha_ext_var, N_ext
                                         overlap_ratio = 0){
   with(data, {
     # Adjust external variance
-    C11 = (alpha_ext_var / N_ext) * N
+    C11 = (alpha_ext_var ) * N
     
     # Process data
     X = matrix(X, N, 1)
@@ -378,12 +374,7 @@ calibrated_est_sib_logistic <- function(X, data, alpha_ext, alpha_ext_var, N_ext
     beta_cal = beta_int +  (C23 - C12) / ( C11 + C33 - 2 * C13) * (alpha_ext - alpha_int)
     beta_cal_var = (C22 - (C23 - C12)^2 / (C11 + C33 - 2 * C13) ) / N
     
-    sub_ind = sample_indices(F_ind, max(F_ind))
-    
-    int_mis = glm(Y[sub_ind] ~ XZ[sub_ind, ], family = binomial(link = "logit"))
-    alpha_int_single = summary(int_mis)$coefficients[2,1]
-    alpha_int_var_single = summary(int_mis)$coefficients[2,2]^2
-    
+
     return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), beta_int = beta_int,
                 beta_int_var = (C22/N), alpha_int = alpha_int, alpha_int_var = (C33)/N))
   } )
