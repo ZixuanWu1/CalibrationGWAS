@@ -128,7 +128,7 @@ calibrated_est_trio_2 <- function(data_int,Z = NULL,rho_shared,alpha_ext,sd_alph
 ##' @export
 
 
-calibrated_est_trio_logistic_1 <- function(data_int, Z = NULL, rho_shared, alpha_ext, sd_alpha_ext){
+calibrated_estimator_logistic_1 <- function(data_int, Z = NULL, rho_shared, alpha_ext, sd_alpha_ext){
   Y_int <- data_int[,1]
   X_1_int <- data_int[,2]
   X_2_int <- data_int[,3]
@@ -183,7 +183,7 @@ calibrated_est_trio_logistic_1 <- function(data_int, Z = NULL, rho_shared, alpha
 ##' @param rho_shared: proportion of shared samples between internal and external data
 ##' @returns calibrated estimator for logistic regression in trio data
 ##' @export
-calibrated_est_trio_logistic_2 <- function(data_int,Z,rho_shared, alpha_ext, sd_alpha_ext){
+calibrated_estimator_logistic_2 <- function(data_int,Z,rho_shared, alpha_ext, sd_alpha_ext){
   Y_int <- data_int[,1]
   X_1_int <- data_int[,2]
   X_2_int <- data_int[,3]
@@ -228,3 +228,6 @@ calibrated_est_trio_logistic_2 <- function(data_int,Z,rho_shared, alpha_ext, sd_
   var_tau_cal <- (1/n)*(V_hat[1,1] - V_hat[1,2]^2/V_hat[2,2])
   return (list("Raw Estimator" = tau_raw,"raw_variance" = V_hat[1,1]/n,"calibrated_est" = tau_cal,"variance" = var_tau_cal))
 }
+
+
+
