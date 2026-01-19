@@ -1,3 +1,6 @@
 To download, use the following command
 
-$\texttt{devtools::install\_github("ZixuanWu1/CalibrationGWAS")}$
+```
+devtools::install_github("ZixuanWu1/CalibrationGWAS")
+```
+
