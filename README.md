@@ -122,13 +122,13 @@ data = format_data(pheno, F_ind, Z)
 Then, for **linear regression**, run:
 
 ```r
-calibrated_est_sib(X, data, alpha_ext, alpha_ext_var, N_ext, overlap_ratio = 0)
+res = calibrated_est_sib(X, data, alpha_ext, alpha_ext_var, N_ext, overlap_ratio = 0)
 ```
 
 For **logistic regression**, run:
 
 ```r
-calibrated_est_sib_logistic(X, data, alpha_ext, alpha_ext_var, N_ext, overlap_ratio = 0)
+res = calibrated_est_sib_logistic(X, data, alpha_ext, alpha_ext_var, N_ext, overlap_ratio = 0)
 ```
 
 Here, `overlap_ratio` represents \(n_{\text{shared}} / N_{\text{int}}\), where  
