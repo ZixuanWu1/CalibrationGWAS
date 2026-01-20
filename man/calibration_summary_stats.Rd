@@ -4,17 +4,34 @@
 \alias{calibration_summary_stats}
 \title{Estimate the correlation between external and internal trio gwas (i.e. sample overlap)}
 \usage{
-calibration_summary_stats(df, rho, family = "trio", r = "shared")
+calibration_summary_stats(
+  df,
+  rho = NA,
+  family = "trio",
+  method = "empirical",
+  r = NA,
+  pheno_cor = NA,
+  family_size = 2,
+  kappa = 0.5
+)
 }
 \arguments{
 \item{df:}{a data frame with these columns: "SNP", "beta_int", "beta_int_var", "alpha_int", "alpha_int_var",
-"alpha_ext", "alpha_ext_var", "N_int", "N_ext"}
+"alpha_ext", "alpha_ext_var", "N_int", "N_ext" (N_int, N_ext won't be used if assumed shared r)}
 
 \item{rho:}{sample overlap ratio}
 
 \item{family:}{type of family structure. Either trio or sibling}
 
-\item{r:}{assumption on correlation between T and NT. Can be zero, shared, or a provided vector.}
+\item{method:}{theoretical or empirical}
+
+\item{r:}{vector of correlation between T and NT for each SNP. Default is 0 (only used ifmethod = "theory" and family == "trio").}
+
+\item{pheno_cor:}{scalar of phenotype correlation between siblings. (only used if method == "theory" and family == "sibling").}
+
+\item{family_size:}{scalar of family size (only used if method == "theory" and family == "sibling").}
+
+\item{kappa:}{vector of correlation between G and Gsib for each SNP. Default is 0 (only used if method = "theory" and family == "sibling").}
 }
 \value{
 a data frame of snp id, calibrated beta and its standard error

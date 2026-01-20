@@ -5,6 +5,7 @@
 ##' @param snp_list: list of SNPs that has zero direct effects (can be selected from an independent selection file)
 ##'
 ##' @return r: noise correlation between external and internal unadjusted model
+##' @export
 noise_correlation <- function(df, snp_list = NA){
 
   # Select snps with zero effects
@@ -93,6 +94,7 @@ calibration_summary_stats_raw <- function(df, rho = NA, family = "trio", r = "sh
 ##' @param kappa: vector of correlation between G and Gsib for each SNP. Default is 0 (only used if method = "theory" and family == "sibling").
 ##'
 ##' @return a data frame of snp id, calibrated beta and its standard error
+##' @export
 calibration_summary_stats <- function(df, rho = NA, family = "trio", method =  "empirical", r = NA,  
                                       pheno_cor = NA, family_size = 2, kappa = .5){
   
