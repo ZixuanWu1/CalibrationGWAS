@@ -2,6 +2,7 @@
 
 export(calibrated_est_sib)
 export(calibrated_est_sib_logistic)
+export(calibrated_est_trio)
 export(calibrated_est_trio_1)
 export(calibrated_est_trio_2)
 export(calibrated_estimator_logistic_1)

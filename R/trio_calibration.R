@@ -1,3 +1,38 @@
+##' @param data_int: 3 columns, Y, X1 and X2 where X1 = T and X2 = NT
+##' @param Z: a matrix with other covariates, NULL if no other covariates
+##' @param rho_shared = n_shared/N
+##' @param alpha_ext = summary statistic gwas
+##' @param sd_alpha_ext = sd of alpha from gwas summary statistic
+##' @param family_info = NT or Gpa
+##' @param model = linear or logistic
+##' @export
+calibrated_est_trio <- function(data_int, alpha_ext, alpha_ext_sd, Z = NULL, rho_shared = 0, family_info = "NT", model = "linear"){
+  
+  if(model == "linear"){
+    if(family_info == "NT"){
+      res = calibrated_est_trio_1(data_int, Z, rho_shared, alpha_ext, alpha_ext_sd)
+    } else if (family_info == "Gpa"){
+      res = calibrated_est_trio_2(data_int, Z, rho_shared, alpha_ext, alpha_ext_sd)
+    } else{
+      warning("Incorrect family information")
+      return()
+    }
+  }
+  if(model == "logistic"){
+    if(family_info == "NT"){
+      res = calibrated_estimator_logistic_1(data_int, Z, rho_shared, alpha_ext, alpha_ext_sd)
+    } else if (family_info == "Gpa"){
+      res = calibrated_estimator_logistic_2(data_int, Z, rho_shared, alpha_ext, alpha_ext_sd)
+    } else{
+      warning("Incorrect family information")
+      return()
+    }
+  } 
+  return(res)
+}
+
+
+
 ############################ Linear Regression ##################################
 
 ##' @param data_int: 3 columns, Y, X1 and X2 where X1 = T and X2 = NT
