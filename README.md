@@ -89,7 +89,7 @@ res = calibrated_est_trio(
 Here:
 
 - `alpha_ext` and `alpha_ext_sd` are the external population estimate and its standard error.  
-- `rho_shared` represents \(n_{\text{shared}} / N_{\text{ext}}\), where \(n_{\text{shared}}\) is the number of overlapping samples between the internal and external datasets, and \(N_{\text{ext}}\) is the external sample size.  
+- `rho_shared` represents $n_{\text{shared}} / N_{\text{ext}}$, where $n_{\text{shared}}$ is the number of overlapping samples between the internal and external datasets, and $N_{\text{ext}}$ is the external sample size.  
 - `family_info` can be either `"NT"` or `"Gpa"`.  
 - `model` can be either `"linear"` or `"logistic"`.
 
@@ -131,9 +131,9 @@ For **logistic regression**, run:
 res = calibrated_est_sib_logistic(X, data, alpha_ext, alpha_ext_var, N_ext, overlap_ratio = 0)
 ```
 
-Here, `overlap_ratio` represents \(n_{\text{shared}} / N_{\text{int}}\), where  
-\(n_{\text{shared}}\) is the number of overlapping samples between the internal and external datasets, and  
-\(N_{\text{int}}\) is the internal sample size.
+Here, `overlap_ratio` represents $n_{\text{shared}} / N_{\text{int}}$, where  
+$n_{\text{shared}}$ is the number of overlapping samples between the internal and external datasets, and  
+$N_{\text{int}}$ is the internal sample size.
 
 Each function returns a list containing:
 
